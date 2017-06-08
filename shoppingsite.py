@@ -60,6 +60,8 @@ def show_melon(melon_id):
 def show_shopping_cart():
     """Display content of shopping cart."""
 
+
+
     # TODO: Display the contents of the shopping cart.
 
     # The logic here will be something like:
@@ -79,6 +81,11 @@ def show_shopping_cart():
     # been added to the session
 
     return render_template("cart.html")
+    #                         common_name=common_name,
+    #                         quantity=session["cart"],
+    #                         price=price)
+
+
 
 
 @app.route("/add_to_cart/<melon_id>")
@@ -93,17 +100,17 @@ def add_to_cart(melon_id):
 
     # The logic here should be something like:
     #
-    
-    
-    if cart in session:
-        if melon_id in cart.keys():
-            cart[melon_id] += 1
+
+    if 'cart' in session:
+        if melon_id in session["cart"]:
+            session["cart"][melon_id] += 1
         else:
-            cart[melon_id] = 1
+            session["cart"][melon_id] = 1
     else:
-        cart = {}
-
-
+        session["cart"] = {}
+        session["cart"][melon_id] = 1
+        
+    flash("Your melon has been added!")
 
     # - check if a "cart" exists in the session, and create one (an empty
     #   dictionary keyed to the string "cart") if not
